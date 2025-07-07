@@ -1,42 +1,55 @@
 import app from "ags/gtk4/app"
 import { Astal } from "ags/gtk4"
-import { createPoll } from "ags/time"
-import Tray from "gi://AstalTray"
-import { execAsync } from "ags/process"
+import Gtk from "gi://Gtk?version=4.0"
+import AstalTray from "gi://AstalTray"
+import GDK from "gi://Gdk?version=4.0"
+import { For, With, createBinding } from "ags"
 
-app.start({
-    main() {
-        const { TOP, LEFT, RIGHT } = Astal.WindowAnchor
-        const clock = createPoll("", 1000, "date")
-        const tray = Tray.get_default()
-        console.log("Tray items:", tray.get_items);
-        for (const item of tray.get_items()) {
-            execAsync("echo " + item.title).then(console.log)
-            console.log(item.title)
-        }
+function Tray() {
+  const tray = AstalTray.get_default()
+  const items = createBinding(tray, "items")
 
-        setTimeout(() => {
-            const items = tray.get_items();
-            console.log("Items after 5 seconds:", items);
+  const init = (btn: Gtk.MenuButton, item: AstalTray.TrayItem) => {
+    btn.menuModel = item.menuModel
+    btn.insert_action_group("dbusmenu", item.actionGroup)
+    item.connect("notify::action-group", () => {
+      btn.insert_action_group("dbusmenu", item.actionGroup)
+    })
+  }
 
-            for (const item of items) {
-                console.log("Title:", item.title);
-                execAsync("echo " + item.title).then(console.log);
-            }
-        }, 10000);  // 5000 milliseconds = 5 seconds
+  return (
+    <box>
+      <For each={items}>
+        {(item) => (
+          <menubutton $={(self) => init(self, item)}>
+            <image gicon={createBinding(item, "gicon")} />
+          </menubutton>
+        )}
+      </For>
+    </box>
+  )
+}
 
-
-        return (
-            <window visible anchor={TOP | LEFT | RIGHT}
-            exclusivity={Astal.Exclusivity.EXCLUSIVE}
-
-            >
+export default function Bar(gdkmonitor: GDK.Monitor) {
+    const { TOP, LEFT, RIGHT } = Astal.WindowAnchor
+    return (
+        <window 
+        visible
+        name="bar"
+        gdkmonitor={gdkmonitor}
+        exclusivity={Astal.Exclusivity.EXCLUSIVE}
+        anchor={TOP | LEFT | RIGHT}
+        application={app}
+        >
             <centerbox>
-            <label $type="start" label={clock} />
-            <label $type="center" />
-            <label $type="end" label="hello" />
+               <box $type="start">
+               
+               </box> 
+               <box $type="end">
+              <Tray /> 
+               </box> 
             </centerbox>
-            </window>
-        )
-    },
-})
+        </window>
+    )
+}
+
