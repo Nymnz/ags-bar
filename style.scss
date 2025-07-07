@@ -2,10 +2,11 @@
 $fg-color: #{"@theme_fg_color"};
 $bg-color: #{"@theme_bg_color"};
 
-window.Bar {
+window#bar {
   background: transparent;
   color: $fg-color;
   font-weight: bold;
+  font-family: "Adwaita Mono Regular", monospace;
 
   > centerbox {
     background: $bg-color;
@@ -16,5 +17,10 @@ window.Bar {
   button {
     border-radius: 8px;
     margin: 2px;
+  }
+
+  label {
+    font-family: "Adwaita Mono Regular", monospace;
+    background: $bg-color;
   }
 }

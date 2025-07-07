@@ -4,7 +4,7 @@ import Gtk from "gi://Gtk?version=4.0"
 import AstalTray from "gi://AstalTray"
 import GDK from "gi://Gdk?version=4.0"
 import { For, With, createBinding } from "ags"
-
+import { createPoll } from "ags/time"
 function Tray() {
   const tray = AstalTray.get_default()
   const items = createBinding(tray, "items")
@@ -30,6 +30,15 @@ function Tray() {
   )
 }
 
+function Clock() {
+    const time = createPoll("", 1000, "date +%a\" \"%d/%m-%Y\" \"%H:%M:%S")
+    return (
+        <menubutton>
+            <label label={time} />
+        </menubutton>
+    )
+}
+
 export default function Bar(gdkmonitor: GDK.Monitor) {
     const { TOP, LEFT, RIGHT } = Astal.WindowAnchor
     return (
@@ -47,6 +56,7 @@ export default function Bar(gdkmonitor: GDK.Monitor) {
                </box> 
                <box $type="end">
               <Tray /> 
+              <Clock />
                </box> 
             </centerbox>
         </window>

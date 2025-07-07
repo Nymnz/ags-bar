@@ -4,6 +4,7 @@ import Bar from "./mybar"
 
 app.start({
   css: style,
+  gtkTheme: "Adwaita",
   main() {
     app.get_monitors().map(Bar)
   },
