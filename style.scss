@@ -3,41 +3,64 @@ $fg-color: #{"@theme_fg_color"};
 $bg-color: #{"@theme_bg_color"};
 
 window#bar {
-  background: transparent;
+  background: $bg_color;
+  min-height: 2.2em;
   color: $fg-color;
-/*  font-weight: bold; */
+  /*  font-weight: bold; */
   font-family: "Adwaita Mono Regular", monospace;
 
-  .capsule {
+  box.capsule {
     background: $bg-color;
     color: white;
+    margin-left: 3px;
+    margin-right: 3px;
     border-radius: 6px;
     font-family: "Adwaita Mono Regular", monospace;
+  }
+
+  menubutton#trayitem {
+    background: transparent;
+    border-style: none;
+    border-width: 0;
+    margin-left: 2px;
+    margin-right: 2px;
+    outline: 0;
+    padding: 0;
+    box-shadow: none;
   }
 
   button {
     background: transparent;
     border-style: none;
-    border-width: 0;
+    outline: 0;
     padding: 0;
-    outline: none;
     box-shadow: none;
+  }
+
+  button:hover {
+    background: pink;
+  }
+
+  image.trayitem {
     background: transparent;
+    border-style: none;
+    border-width: 0;
+    margin-left: 2px;
+    margin-right: 2px;
+    outline: 0;
+    padding: 0;
+    box-shadow: none;
   }
 
   > centerbox {
-/*    background: $bg-color; */
+    /*    background: $bg-color; */
     border-radius: 10px;
     margin: 8px;
   }
 
-  button {
-    border-radius: 8px;
-    margin: 2px;
+  /* button {
+  border-radius: 8px;
+  margin: 2px;
   }
-
-  label {
-/*    background: $bg-color; */
-  }
-
+   */
 }

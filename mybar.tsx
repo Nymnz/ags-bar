@@ -22,7 +22,7 @@ function Tray() {
     <box class="capsule" >
       <For each={items}>
         {(item) => (
-          <menubutton class="trayitem" $={(self) => init(self, item)}>
+          <menubutton name="trayitem" $={(self) => init(self, item)}>
             <image class="trayitem" gicon={createBinding(item, "gicon")} />
           </menubutton>
         )}
@@ -34,9 +34,9 @@ function Tray() {
 function Clock() {
     const time = createPoll("", 1000, "date +%a\" \"%d/%m-%Y\" \"%H:%M:%S")
     return (
-        <menubutton class="capsule">
+        <box class="capsule">
             <label class= "item" label={time} />
-        </menubutton>
+        </box>
     )
 }
 
