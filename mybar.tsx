@@ -21,11 +21,18 @@ function Tray() {
   return (
     <box class="capsule" >
       <For each={items}>
-        {(item) => (
-          <menubutton name="trayitem" $={(self) => init(self, item)}>
+        {(item) => {
+            let tooltip;
+            if (item.tooltip_markup != null && item.tooltip_markup != "" ) {
+                tooltip = item.tooltip_markup;
+            } else {
+                tooltip = item.title;
+            }
+        return (
+          <menubutton tooltip_text={tooltip} name="trayitem" $={(self) => init(self, item)}>
             <image class="trayitem" gicon={createBinding(item, "gicon")} />
           </menubutton>
-        )}
+        )}}
       </For>
     </box>
   )
