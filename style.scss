@@ -5,11 +5,28 @@ $bg-color: #{"@theme_bg_color"};
 window#bar {
   background: transparent;
   color: $fg-color;
-  font-weight: bold;
+/*  font-weight: bold; */
   font-family: "Adwaita Mono Regular", monospace;
 
-  > centerbox {
+  .capsule {
     background: $bg-color;
+    color: white;
+    border-radius: 6px;
+    font-family: "Adwaita Mono Regular", monospace;
+  }
+
+  button {
+    background: transparent;
+    border-style: none;
+    border-width: 0;
+    padding: 0;
+    outline: none;
+    box-shadow: none;
+    background: transparent;
+  }
+
+  > centerbox {
+/*    background: $bg-color; */
     border-radius: 10px;
     margin: 8px;
   }
@@ -20,7 +37,7 @@ window#bar {
   }
 
   label {
-    font-family: "Adwaita Mono Regular", monospace;
-    background: $bg-color;
+/*    background: $bg-color; */
   }
+
 }

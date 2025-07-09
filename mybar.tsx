@@ -5,6 +5,7 @@ import AstalTray from "gi://AstalTray"
 import GDK from "gi://Gdk?version=4.0"
 import { For, With, createBinding } from "ags"
 import { createPoll } from "ags/time"
+
 function Tray() {
   const tray = AstalTray.get_default()
   const items = createBinding(tray, "items")
@@ -18,11 +19,11 @@ function Tray() {
   }
 
   return (
-    <box>
+    <box class="capsule" >
       <For each={items}>
         {(item) => (
-          <menubutton $={(self) => init(self, item)}>
-            <image gicon={createBinding(item, "gicon")} />
+          <menubutton class="trayitem" $={(self) => init(self, item)}>
+            <image class="trayitem" gicon={createBinding(item, "gicon")} />
           </menubutton>
         )}
       </For>
@@ -33,8 +34,8 @@ function Tray() {
 function Clock() {
     const time = createPoll("", 1000, "date +%a\" \"%d/%m-%Y\" \"%H:%M:%S")
     return (
-        <menubutton>
-            <label label={time} />
+        <menubutton class="capsule">
+            <label class= "item" label={time} />
         </menubutton>
     )
 }
