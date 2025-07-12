@@ -1,5 +1,5 @@
 import app from "ags/gtk4/app"
-import { Astal } from "ags/gtk4"
+import { Astal, Gdk } from "ags/gtk4"
 import Gtk from "gi://Gtk?version=4.0"
 import AstalTray from "gi://AstalTray"
 import GDK from "gi://Gdk?version=4.0"
@@ -10,14 +10,21 @@ function Tray() {
   const tray = AstalTray.get_default()
   const items = createBinding(tray, "items")
 
+  const initi = (rightclick: Gtk.GestureClick, itemm: AstalTray.TrayItem) => {
+      rightclick.set_button(GDK.BUTTON_SECONDARY)
+      rightclick.menuModel = itemm.menuModel
+      rightclick.insert_action_group("dbusmenu", itemm.actionGroup)
+      item.connect("notify::action-group", () => {
+          btn.insert_action_group("dbusmenu", item.actionGroup)
+    })
+  }
   const init = (btn: Gtk.MenuButton, item: AstalTray.TrayItem) => {
     btn.menuModel = item.menuModel
     btn.insert_action_group("dbusmenu", item.actionGroup)
     item.connect("notify::action-group", () => {
       btn.insert_action_group("dbusmenu", item.actionGroup)
     })
-  }
-
+ }
   return (
     <box class="capsule" >
       <For each={items}>
